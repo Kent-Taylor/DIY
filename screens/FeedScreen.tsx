@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
+import Container from "../components/layouts/Container";
 
 interface IFeedScreenProps {
     navigation: {
@@ -8,7 +9,7 @@ interface IFeedScreenProps {
 }
 export default (props: IFeedScreenProps) => {
     return (
-        <View>
+        <Container>
             <Text>Feed Screen</Text>
 
             <TouchableOpacity onPress={() => props.navigation.navigate("Search")}>
@@ -16,6 +17,17 @@ export default (props: IFeedScreenProps) => {
                     search
                 </Text>
             </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Account")}>
+                <Text>
+                    Account
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate("PostForm")}>
+                <Text>
+                    Post screen
+                </Text>
+            </TouchableOpacity>
+
+        </Container>
     );
 };
