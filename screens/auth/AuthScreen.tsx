@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import textInputStyles from "../../styles/forms/textInputStyles";
 const { textFieldWrapper, textField } = textInputStyles;
 import authScreenStyles from "../../styles/stacks/auth/authScreenStyles";
+import API from "../../utils/api";
 
 export default () => {
     const [formToShow, setFormToShow] = useState("LOGIN");
@@ -34,10 +35,24 @@ export default () => {
         }
     };
 
+    const handleSubmit = () => {
+        const params = {
+            auth: {
+                email: email,
+                password: password
+            }
+        };
+        API.post("memipedia_user_token", params)
+            .then(response => {
+                console.log("Response from handle submit", response.data);
+            })
+            .catch(error => {
+                console.log("error getting token", error);
+            });
+    };
+
     return (
-        <View
-            style={authScreenStyles.container}
-        >
+        <View style={authScreenStyles.container}>
             <Text style={{ color: "white" }}>{headerText()}</Text>
 
             <View style={textFieldWrapper}>
@@ -47,9 +62,10 @@ export default () => {
                     onChangeText={val => setEmail(val)}
                     style={textField}
                     autoCapitalize="none"
-                    autoCorrect={false}
+                    spellCheck={false}
                 />
             </View>
+
             <View style={textFieldWrapper}>
                 <TextInput
                     placeholder="Password"
@@ -57,13 +73,15 @@ export default () => {
                     onChangeText={val => setPassword(val)}
                     style={textField}
                     secureTextEntry={true}
-
                 />
             </View>
 
-
             <TouchableOpacity onPress={handleAuthTypePress}>
                 <Text style={{ color: "white" }}>{screenTypeText()}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleSubmit}>
+                <Text style={{ color: "white" }}>{headerText()}</Text>
             </TouchableOpacity>
         </View>
     );
