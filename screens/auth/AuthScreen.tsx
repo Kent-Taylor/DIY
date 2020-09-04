@@ -5,6 +5,9 @@ import textInputStyles from "../../styles/forms/textInputStyles";
 const { textFieldWrapper, textField } = textInputStyles;
 import authScreenStyles from "../../styles/stacks/auth/authScreenStyles";
 import API from "../../utils/api";
+import Button from "../../components/helpers/Button";
+
+
 
 interface IAuthScreenProps {
     navigation: {
@@ -16,6 +19,7 @@ export default (props: IAuthScreenProps) => {
     const [formToShow, setFormToShow] = useState("LOGIN");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const screenTypeText = () => {
         if (formToShow === "LOGIN") {
@@ -42,6 +46,7 @@ export default (props: IAuthScreenProps) => {
     };
 
     const handleSubmit = () => {
+        setIsSubmitting(true);
         const params = {
             auth: {
                 email: email,
@@ -51,6 +56,7 @@ export default (props: IAuthScreenProps) => {
         API.post("memipedia_user_token", params)
             .then(response => {
                 console.log("Response from handle submit", response.data);
+                console.log("Access granted!");
 
                 if (response.data.jwt) {
                     props.navigation.navigate("Feed")
@@ -58,8 +64,10 @@ export default (props: IAuthScreenProps) => {
                 else {
                     alert("Wrong email or password, please try again.")
                 }
+                setIsSubmitting(false);
             })
             .catch(error => {
+                setIsSubmitting(false);
                 alert("Wrong email or password, please try again.")
                 console.log("error getting token", error);
             });
@@ -94,9 +102,17 @@ export default (props: IAuthScreenProps) => {
                 <Text style={{ color: "white" }}>{screenTypeText()}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text style={{ color: "white" }}>{headerText()}</Text>
-            </TouchableOpacity>
+            {
+                isSubmitting ? (
+                    <Button text={"submitting..."} onPress={handleSubmit} disabled={true} />
+                ) : (
+                        <Button text={headerText()} onPress={handleSubmit} />
+                    )
+            }
+
+
+
+
         </View>
     );
 };
