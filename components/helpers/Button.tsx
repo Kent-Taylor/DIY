@@ -18,7 +18,7 @@ export default (props: IButtonProps) => {
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 30,
-                marginTop: 42
+                marginTop: 22
             }}
             {...props}
         >

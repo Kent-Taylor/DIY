@@ -7,14 +7,11 @@ import authScreenStyles from "../../styles/stacks/auth/authScreenStyles";
 import API from "../../utils/api";
 import Button from "../../components/helpers/Button";
 
-
-
 interface IAuthScreenProps {
     navigation: {
         navigate: (arg: string) => void;
     };
 }
-
 export default (props: IAuthScreenProps) => {
     const [formToShow, setFormToShow] = useState("LOGIN");
     const [email, setEmail] = useState("");
@@ -37,7 +34,7 @@ export default (props: IAuthScreenProps) => {
         }
     };
 
-    const headerText = () => {
+    const buttonText = () => {
         if (formToShow === "LOGIN") {
             return "Login";
         } else if (formToShow === "REGISTER") {
@@ -45,8 +42,7 @@ export default (props: IAuthScreenProps) => {
         }
     };
 
-    const handleSubmit = () => {
-        setIsSubmitting(true);
+    const handleLogin = () => {
         const params = {
             auth: {
                 email: email,
@@ -55,28 +51,60 @@ export default (props: IAuthScreenProps) => {
         };
         API.post("memipedia_user_token", params)
             .then(response => {
-                console.log("Response from handle submit", response.data);
-                console.log("Access granted!");
-
                 if (response.data.jwt) {
-                    props.navigation.navigate("Feed")
+                    props.navigation.navigate("Feed");
+                } else {
+                    alert(
+                        "It looks like you typed in the wrong email or password, please try again"
+                    );
                 }
-                else {
-                    alert("Wrong email or password, please try again.")
-                }
+
                 setIsSubmitting(false);
             })
             .catch(error => {
                 setIsSubmitting(false);
-                alert("Wrong email or password, please try again.")
-                console.log("error getting token", error);
+                alert(
+                    "It looks like you typed in the wrong email or password, please try again"
+                );
             });
+    };
+
+    const handleRegistration = () => {
+        const params = {
+            user: {
+                email: email,
+                password: password
+            }
+        };
+        API.post("memipedia_users", params)
+            .then(response => {
+                console.log("Res for creating user", response.data);
+                if (response.data.memipedia_user) {
+                    props.navigation.navigate("Feed");
+                } else {
+                    alert("Error creating user account");
+                }
+
+                setIsSubmitting(false);
+            })
+            .catch(error => {
+                setIsSubmitting(false);
+                alert("Error creating user account");
+            });
+    };
+
+    const handleSubmit = () => {
+        setIsSubmitting(true);
+
+        if (formToShow === "LOGIN") {
+            handleLogin();
+        } else {
+            handleRegistration();
+        }
     };
 
     return (
         <View style={authScreenStyles.container}>
-            <Text style={{ color: "white" }}>{headerText()}</Text>
-
             <View style={textFieldWrapper}>
                 <TextInput
                     placeholder="Email"
@@ -98,21 +126,18 @@ export default (props: IAuthScreenProps) => {
                 />
             </View>
 
-            <TouchableOpacity onPress={handleAuthTypePress}>
+            <TouchableOpacity
+                style={{ marginTop: 10, marginBottom: 20 }}
+                onPress={handleAuthTypePress}
+            >
                 <Text style={{ color: "white" }}>{screenTypeText()}</Text>
             </TouchableOpacity>
 
-            {
-                isSubmitting ? (
-                    <Button text={"submitting..."} onPress={handleSubmit} disabled={true} />
-                ) : (
-                        <Button text={headerText()} onPress={handleSubmit} />
-                    )
-            }
-
-
-
-
+            {isSubmitting ? (
+                <Button text={"Submitting..."} onPress={handleSubmit} disabled={true} />
+            ) : (
+                    <Button text={buttonText()} onPress={handleSubmit} />
+                )}
         </View>
     );
 };
