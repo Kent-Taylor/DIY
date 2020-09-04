@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import axios from "axios";
 
 import textInputStyles from "../../styles/forms/textInputStyles";
 const { textFieldWrapper, textField } = textInputStyles;
 import authScreenStyles from "../../styles/stacks/auth/authScreenStyles";
-import API from "../../utils/api";
+
+const apiEndpoint =
+    "https://kenttaylor.devcamp.space/memipedia/memipedia_user_token";
 
 export default () => {
     const [formToShow, setFormToShow] = useState("LOGIN");
@@ -42,7 +45,8 @@ export default () => {
                 password: password
             }
         };
-        API.post("memipedia_user_token", params)
+        axios
+            .post(apiEndpoint, params)
             .then(response => {
                 console.log("Response from handle submit", response.data);
             })

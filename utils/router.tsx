@@ -17,8 +17,7 @@ const AppStack = createStackNavigator(
         Feed: FeedScreen,
         Search: SearchScreen,
         Account: AccountScreen,
-        PostForm: PostFormScreen,
-
+        PostForm: PostFormScreen
     },
     {
         initialRouteName: "Feed",
@@ -42,8 +41,7 @@ const AuthStack = createStackNavigator(
             headerShown: false
         }
     }
-
-)
+);
 
 export default createAppContainer(
     createSwitchNavigator(
