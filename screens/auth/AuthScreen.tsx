@@ -1,11 +1,21 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    TextInput,
+    ScrollView,
+} from "react-native";
+import * as SecureStore from "expo-secure-store";
 
 import textInputStyles from "../../styles/forms/textInputStyles";
 const { textFieldWrapper, textField } = textInputStyles;
 import authScreenStyles from "../../styles/stacks/auth/authScreenStyles";
 import API from "../../utils/api";
 import Button from "../../components/helpers/Button";
+import { formatErrors } from "../../utils/textFormatters";
+
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 interface IAuthScreenProps {
     navigation: {
@@ -17,6 +27,8 @@ export default (props: IAuthScreenProps) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { getUser } = useContext(CurrentUserContext);
 
     const screenTypeText = () => {
         if (formToShow === "LOGIN") {
@@ -46,22 +58,27 @@ export default (props: IAuthScreenProps) => {
         const params = {
             auth: {
                 email: email,
-                password: password
-            }
+                password: password,
+            },
         };
         API.post("memipedia_user_token", params)
-            .then(response => {
+            .then(async (response) => {
                 if (response.data.jwt) {
+                    await SecureStore.setItemAsync(
+                        "memipedia_secure_token",
+                        response.data.jwt
+                    );
+                    getUser();
+                    setIsSubmitting(false);
                     props.navigation.navigate("Feed");
                 } else {
+                    setIsSubmitting(false);
                     alert(
                         "It looks like you typed in the wrong email or password, please try again"
                     );
                 }
-
-                setIsSubmitting(false);
             })
-            .catch(error => {
+            .catch((error) => {
                 setIsSubmitting(false);
                 alert(
                     "It looks like you typed in the wrong email or password, please try again"
@@ -73,21 +90,22 @@ export default (props: IAuthScreenProps) => {
         const params = {
             user: {
                 email: email,
-                password: password
-            }
+                password: password,
+            },
         };
         API.post("memipedia_users", params)
-            .then(response => {
+            .then((response) => {
                 console.log("Res for creating user", response.data);
                 if (response.data.memipedia_user) {
-                    props.navigation.navigate("Feed");
+                    handleLogin();
                 } else {
-                    alert("Error creating user account");
+                    setIsSubmitting(false);
+                    alert(
+                        `Error creating account: ${formatErrors(response.data.errors)}`
+                    );
                 }
-
-                setIsSubmitting(false);
             })
-            .catch(error => {
+            .catch((error) => {
                 setIsSubmitting(false);
                 alert("Error creating user account");
             });
@@ -104,12 +122,12 @@ export default (props: IAuthScreenProps) => {
     };
 
     return (
-        <View style={authScreenStyles.container}>
+        <ScrollView style={authScreenStyles.container}>
             <View style={textFieldWrapper}>
                 <TextInput
                     placeholder="Email"
                     value={email}
-                    onChangeText={val => setEmail(val)}
+                    onChangeText={(val) => setEmail(val)}
                     style={textField}
                     autoCapitalize="none"
                     spellCheck={false}
@@ -120,9 +138,10 @@ export default (props: IAuthScreenProps) => {
                 <TextInput
                     placeholder="Password"
                     value={password}
-                    onChangeText={val => setPassword(val)}
+                    onChangeText={(val) => setPassword(val)}
                     style={textField}
                     secureTextEntry={true}
+                    onSubmitEditing={handleSubmit}
                 />
             </View>
 
@@ -138,6 +157,8 @@ export default (props: IAuthScreenProps) => {
             ) : (
                     <Button text={buttonText()} onPress={handleSubmit} />
                 )}
-        </View>
+
+
+        </ScrollView>
     );
 };
