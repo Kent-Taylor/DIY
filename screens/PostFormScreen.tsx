@@ -1,22 +1,39 @@
-import React, { useState } from "react";
-import { View, TextInput, Text, ProgressViewIOSComponent } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, TextInput, ScrollView } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import api from "../utils/api";
 import PostImagePicker from "../components/posts/PostImagePicker";
 import Button from "../components/helpers/Button";
-
+import postFormStyles from "../styles/stacks/posts/postFormStyles";
+const {
+    container,
+    formGrid,
+    textInputWrapper,
+    inputElement,
+    textAreaElement,
+    buttonWrapper,
+} = postFormStyles;
 
 interface IPostFormScreenProps {
     navigation: {
         navigate: (screenName: string, data: any) => void;
-    }
+    };
 }
 export default (props: IPostFormScreenProps) => {
+    const imagePickerRef: any = useRef();
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [postImage, setPostImage] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const setBaseState = () => {
+        imagePickerRef.current.clearImage()
+        setName("");
+        setContent("");
+        setPostImage(null);
+        setIsSubmitting(false)
+    }
 
     const buildForm = () => {
         let formData = new FormData();
@@ -50,15 +67,15 @@ export default (props: IPostFormScreenProps) => {
                 },
             })
             .then((response) => {
-                console.log("res from creating a new post", response.data);
-                setIsSubmitting(false);
-
                 if (response.data.memipedia_post) {
-                    props.navigation.navigate("PostDetail",
-                        { post: response.data.memipedia_post })
-                }
-                else {
-                    alert("There was an issue creating a post, all fields are required.")
+                    setBaseState();
+                    props.navigation.navigate("PostDetail", {
+                        post: response.data.memipedia_post,
+                    });
+                } else {
+                    alert(
+                        "There was an issue creating the post, all fields are required, and only images are allowed."
+                    );
                 }
             })
             .catch((error) => {
@@ -68,30 +85,35 @@ export default (props: IPostFormScreenProps) => {
     };
 
     return (
-        <View style={{ height: "100%" }}>
-            <TextInput
-                placeholder="Name"
-                value={name}
-                onChangeText={(val) => setName(val)}
-            />
+        <ScrollView style={container}>
+            <View style={formGrid}>
+                <PostImagePicker ref={imagePickerRef} setPostImage={setPostImage} />
 
-            <TextInput
-                placeholder="Add meme explanation here"
-                value={content}
-                onChangeText={(val) => setContent(val)}
-                style={{ borderWidth: 2, borderColor: "black" }}
-                multiline
-            />
+                <View style={textInputWrapper}>
+                    <TextInput
+                        placeholder="Post name"
+                        value={name}
+                        onChangeText={(val) => setName(val)}
+                        style={inputElement}
+                    />
 
-            <View style={{ marginTop: 40, height: 100 }}>
-                <PostImagePicker setPostImage={setPostImage} />
+                    <TextInput
+                        placeholder="DYI explanation"
+                        value={content}
+                        onChangeText={(val) => setContent(val)}
+                        style={[inputElement, textAreaElement]}
+                        multiline
+                    />
+                </View>
             </View>
 
-            {isSubmitting ? (
-                <Button text="Submitting..." disabled />
-            ) : (
-                    <Button text="Submit" onPress={handleSubmit} />
-                )}
-        </View>
+            <View style={buttonWrapper}>
+                {isSubmitting ? (
+                    <Button text="Submitting..." disabled />
+                ) : (
+                        <Button text="Submit" onPress={handleSubmit} />
+                    )}
+            </View>
+        </ScrollView>
     );
 };

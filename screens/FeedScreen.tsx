@@ -51,7 +51,7 @@ export default (props: IFeedScreenProps) => {
 
     return (
         <Container navigate={props.navigation.navigate}>
-            <View>
+            <View style={{ marginTop: 25 }}>
                 {isLoading ? (
                     <ActivityIndicator />
                 ) : (
