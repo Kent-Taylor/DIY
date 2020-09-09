@@ -5,7 +5,7 @@ import { highlight, lightGrey } from "../../styles/colors";
 
 interface IButtonProps {
     text: string;
-    onPress: any;
+    onPress?: any;
     disabled?: boolean;
 }
 
