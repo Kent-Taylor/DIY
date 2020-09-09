@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { View, TextInput, Text } from "react-native";
+import { View, TextInput, Text, ProgressViewIOSComponent } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import api from "../utils/api";
 import PostImagePicker from "../components/posts/PostImagePicker";
 import Button from "../components/helpers/Button";
 
-export default () => {
+
+interface IPostFormScreenProps {
+    navigation: {
+        navigate: (screenName: string, data: any) => void;
+    }
+}
+export default (props: IPostFormScreenProps) => {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [postImage, setPostImage] = useState(null);
@@ -15,45 +21,51 @@ export default () => {
     const buildForm = () => {
         let formData = new FormData();
 
-        formData.append("post[name]", name)
-        formData.append("post[content]", content)
+        formData.append("post[name]", name);
+        formData.append("post[content]", content);
 
         const uriParts = postImage.split(".");
         const fileType = uriParts[uriParts.length - 1];
 
         formData.append("post[post_image]", {
-            //@ts-ignore
+            // @ts-ignore
             uri: postImage,
             name: `photo.${fileType}`,
-            type: `imag/${fileType}`
-        })
+            type: `image/${fileType}`,
+        });
 
         return formData;
-    }
+    };
 
     const handleSubmit = async () => {
         const token = await SecureStore.getItemAsync("memipedia_secure_token");
-        setIsSubmitting(true)
+        setIsSubmitting(true);
 
         api
             .post("memipedia_posts", buildForm(), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     Accept: "application/json",
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
                 },
             })
             .then((response) => {
-                console.log("response from creating new post", response.data);
-                setIsSubmitting(false)
+                console.log("res from creating a new post", response.data);
+                setIsSubmitting(false);
+
+                if (response.data.memipedia_post) {
+                    props.navigation.navigate("PostDetail",
+                        { post: response.data.memipedia_post })
+                }
+                else {
+                    alert("There was an issue creating a post, all fields are required.")
+                }
             })
             .catch((error) => {
                 console.log("error from creating new post", error);
-                setIsSubmitting(false)
-
+                setIsSubmitting(false);
             });
     };
-
 
     return (
         <View style={{ height: "100%" }}>
@@ -76,11 +88,10 @@ export default () => {
             </View>
 
             {isSubmitting ? (
-                <Button text="Posting..." disabled />
+                <Button text="Submitting..." disabled />
             ) : (
                     <Button text="Submit" onPress={handleSubmit} />
                 )}
-
         </View>
     );
 };

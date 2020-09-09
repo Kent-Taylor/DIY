@@ -13,6 +13,10 @@ export default StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
     },
+    contentText: {
+        color: "white",
+        fontSize: RFValue(14, 680)
+    },
     postHeading: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -26,4 +30,5 @@ export default StyleSheet.create({
     loading: {
         marginTop: 24,
     },
+
 });
