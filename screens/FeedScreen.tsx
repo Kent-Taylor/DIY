@@ -42,7 +42,7 @@ export default (props: IFeedScreenProps) => {
 
     return (
         <Container navigate={props.navigation.navigate}>
-            <View>
+            <View style={{ height: "90%" }}>
                 <PostList
                     isLoading={isLoading}
                     getPosts={getPosts}

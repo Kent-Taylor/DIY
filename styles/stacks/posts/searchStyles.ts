@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     searchFormContainer: {
         padding: 15,
-        flexDirection: "row"
+        flexDirection: "row",
     },
     searchTextInput: {
         backgroundColor: "white",

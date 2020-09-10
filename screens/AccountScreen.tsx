@@ -4,6 +4,7 @@ import * as SecureStore from "expo-secure-store";
 
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import Button from "../components/helpers/Button";
+import { primary } from "../styles/colors";
 
 interface IAccountScreenProps {
     navigation: {
@@ -20,13 +21,10 @@ export default (props: IAccountScreenProps) => {
 
     }
     return (
-        <View>
-            <Text>
-                This is the Account Screen
-            </Text>
-            <View>
-                <Button onPress={handleSignOut} text="Sign Out" />
-            </View>
+
+        <View style={{ padding: 15, height: "100%" }}>
+            <Button onPress={handleSignOut} text="Sign Out" />
         </View>
+
     )
 }

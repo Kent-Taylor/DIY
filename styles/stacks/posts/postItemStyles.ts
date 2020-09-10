@@ -3,10 +3,10 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export default StyleSheet.create({
     itemWrapper: {
-        marginBottom: 20,
+        marginBottom: 15,
+        backgroundColor: "#D08686"
     },
     imageWrapper: {
-        marginBottom: 15,
         borderBottomColor: "white",
     },
     contentWrapper: {
@@ -24,8 +24,14 @@ export default StyleSheet.create({
     },
     nameText: {
         color: "white",
-        fontSize: RFValue(20, 680),
-        fontWeight: "900",
+        borderWidth: 1,
+        borderRadius: 12,
+        borderColor: "white",
+        padding: 7,
+        margin: 10,
+        fontSize: RFValue(16, 680),
+        marginBottom: 5,
+        fontWeight: "600",
     },
     loading: {
         marginTop: 24,

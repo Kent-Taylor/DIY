@@ -1,26 +1,32 @@
-import { lightGrey } from './../../colors';
+import { lightGrey, primary } from './../../colors';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        height: "100%"
+        height: "100%",
+
     },
     formGrid: {
-        flexDirection: "row",
+        // flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
         marginBottom: 20,
+        marginTop: 42,
+        padding: 20,
     },
     textInputWrapper: {
-        width: "100%"
+        width: "100%",
     },
     inputElement: {
-        borderBottomColor: lightGrey,
+        borderRadius: 12,
+        borderColor: "#D08686",
         borderBottomWidth: 1,
-        borderLeftColor: lightGrey,
-        borderLeftWidth: 1,
-        padding: 3,
+        padding: 10,
     },
     textAreaElement: {
-        height: 76,
+        height: 90,
+        width: "100%"
+
     },
     buttonWrapper: {
         paddingRight: 15,

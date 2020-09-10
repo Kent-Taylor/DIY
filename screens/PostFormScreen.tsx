@@ -98,7 +98,7 @@ export default (props: IPostFormScreenProps) => {
                     />
 
                     <TextInput
-                        placeholder="DYI explanation"
+                        placeholder="DYI directions"
                         value={content}
                         onChangeText={(val) => setContent(val)}
                         style={[inputElement, textAreaElement]}

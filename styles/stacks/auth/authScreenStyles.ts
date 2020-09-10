@@ -8,7 +8,7 @@ export default StyleSheet.create({
         backgroundColor: dark,
         padding: 25,
         height: "100%",
-        marginTop: Constants.statusBarHeight,
+        paddingTop: Constants.statusBarHeight
 
 
     }
