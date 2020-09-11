@@ -57,7 +57,7 @@ export default (props: ISearchScreenProps) => {
             <TextInput
                 value={query}
                 onChangeText={(val) => setQuery(val)}
-                placeholder="Search for a meme"
+                placeholder="Search for a post"
                 onSubmitEditing={handleSearch}
                 style={searchTextInput}
             />

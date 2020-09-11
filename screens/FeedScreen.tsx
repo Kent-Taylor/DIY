@@ -5,6 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import Container from "../components/layouts/Container";
 import api from "../utils/api";
 import PostList from "../components/posts/PostList";
+import content from "../screens/PostDetailScreen";
 
 interface IFeedScreenProps {
     navigation: {

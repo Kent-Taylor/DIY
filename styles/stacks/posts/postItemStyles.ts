@@ -12,20 +12,22 @@ export default StyleSheet.create({
     contentWrapper: {
         paddingLeft: 15,
         paddingRight: 15,
+        borderLeftWidth: 8,
+        borderColor: "white",
+        borderRadius: 5
     },
     contentText: {
         color: "white",
         fontSize: RFValue(14, 680)
     },
     postHeading: {
-        flexDirection: "row",
+
         justifyContent: "space-between",
-        alignItems: "center",
+
     },
     nameText: {
         color: "white",
-        borderWidth: 1,
-        borderRadius: 12,
+        borderLeftWidth: 1,
         borderColor: "white",
         padding: 7,
         margin: 10,
@@ -36,5 +38,9 @@ export default StyleSheet.create({
     loading: {
         marginTop: 24,
     },
+    textTruncateStyle: {
+        color: "pink",
+        margin: 5,
+    }
 
 });

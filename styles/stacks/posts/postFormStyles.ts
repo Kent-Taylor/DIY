@@ -7,7 +7,6 @@ export default StyleSheet.create({
 
     },
     formGrid: {
-        // flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 20,
@@ -18,10 +17,10 @@ export default StyleSheet.create({
         width: "100%",
     },
     inputElement: {
-        borderRadius: 12,
         borderColor: "#D08686",
-        borderBottomWidth: 1,
+        borderLeftWidth: 1,
         padding: 10,
+        margin: 7
     },
     textAreaElement: {
         height: 90,
