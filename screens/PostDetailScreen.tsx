@@ -1,8 +1,10 @@
 
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import PostItem from "../components/posts/PostItem";
 import Container from "../components/layouts/Container";
+import AutoHeightImage from "react-native-auto-height-image";
+
 
 import postItemStyles from "../styles/stacks/posts/postItemStyles";
 
@@ -30,9 +32,17 @@ export default (props: IPostDetailScreenProps) => {
         <Container navigate={props.navigation.navigate}>
             <ScrollView>
                 <View style={{ marginTop: 30 }}>
-                    <PostItem post={post} />
+                    {/* <PostItem post={post} /> */}
                     <View style={contentWrapper}>
+                        <Text style={postItemStyles.nameText}>{post.name}</Text>
+
+                        <AutoHeightImage
+                            width={Dimensions.get("window").width}
+                            source={{ uri: post.post_image_url }}
+                            style={{ marginBottom: 10 }}
+                        />
                         <Text style={contentText}>{post.content}</Text>
+
                     </View>
                 </View>
             </ScrollView>
