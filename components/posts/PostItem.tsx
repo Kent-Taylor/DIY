@@ -34,7 +34,7 @@ export default (props: IPostItemProps) => {
     }
 
     const renderCollapsar = () => {
-        return (<Text>
+        return (<Text style={postItemStyles.textTruncateStyle}>
             {'Read Less'}
         </Text>);
     }
