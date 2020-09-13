@@ -5,7 +5,6 @@ import PostItem from "../components/posts/PostItem";
 import Container from "../components/layouts/Container";
 import AutoHeightImage from "react-native-auto-height-image";
 
-
 import postItemStyles from "../styles/stacks/posts/postItemStyles";
 
 const { contentWrapper, contentText } = postItemStyles;
@@ -31,9 +30,9 @@ export default (props: IPostDetailScreenProps) => {
     return (
         <Container navigate={props.navigation.navigate}>
             <ScrollView>
-                <View style={{ marginTop: 30 }}>
+                <View style={{ marginTop: 10 }}>
                     {/* <PostItem post={post} /> */}
-                    <View style={contentWrapper}>
+                    <View >
                         <Text style={postItemStyles.nameText}>{post.name}</Text>
 
                         <AutoHeightImage
@@ -41,7 +40,7 @@ export default (props: IPostDetailScreenProps) => {
                             source={{ uri: post.post_image_url }}
                             style={{ marginBottom: 10 }}
                         />
-                        <Text style={contentText}>{post.content}</Text>
+                        <Text style={{ padding: 10, color: "white" }}>{post.content}</Text>
 
                     </View>
                 </View>

@@ -3,7 +3,6 @@ import { View, Text, Dimensions } from "react-native";
 import AutoHeightImage from "react-native-auto-height-image";
 import TextTruncate from 'react-native-text-truncate';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import bottomTabStyles from "../../styles/navigation/bottomTabStyles";
 
 import postItemStyles from "../../styles/stacks/posts/postItemStyles";
 
@@ -31,14 +30,14 @@ export default (props: IPostItemProps) => {
 
     const renderExpandor = () => {
         return (<Text style={postItemStyles.textTruncateStyle}>
-            <MaterialCommunityIcons name="chevron-down-circle" color="white" size={30} />
+            <MaterialCommunityIcons name="chevron-down-circle" color="white" size={20} />
 
         </Text>);
     }
 
     const renderCollapsar = () => {
         return (<Text style={postItemStyles.textTruncateStyle}>
-            <MaterialCommunityIcons name="chevron-up-circle" color="white" size={30} />
+            <MaterialCommunityIcons name="chevron-up-circle" color="white" size={20} />
 
         </Text>);
     }
