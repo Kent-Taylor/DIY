@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Button, StatusBar } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import Container from "../components/layouts/Container";
 import api from "../utils/api";
 import PostList from "../components/posts/PostList";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import SearchHeader from 'react-native-search-header';
 
 import searchStyles from "../styles/stacks/posts/searchStyles";
 
@@ -91,11 +92,69 @@ export default (props: ISearchScreenProps) => {
         }
     };
 
-    return (
-        <Container navigate={props.navigation.navigate}>
-            {searchBar}
+    // return (
+    //     <Container navigate={props.navigation.navigate}>
+    //         {searchBar}
 
-            {queryRenderer()}
-        </Container>
-    );
+    //         {queryRenderer()}
+    //     </Container>
+    // );
+    const searchHeaderRef = React.useRef(null);
+    return (
+        <View>
+            <StatusBar barStyle='light-content' />
+            <View />
+            <View>
+                <Ionicons name="md-search"
+                    color="black"
+                    size={30}
+                    onPress={() => searchHeaderRef.current.show()}
+                />
+
+            </View>
+            <SearchHeader
+                ref={searchHeaderRef}
+                placeholder='Search...'
+                placeholderColor='darkGrey'
+                onEnteringSearch={handleSearch}
+
+                pinnedSuggestions={[`Table`, `stairs`, `drawer`]}
+                onClear={() => {
+                    console.log(`Clearing input!`);
+                }}
+                onGetAutocompletions={async (text) => {
+                    if (text) {
+                        const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&q=${text}`, {
+                            method: `get`
+                        });
+                        const data = await response.json();
+                        return data[1];
+                    } else {
+                        return [];
+                    }
+                }}
+            />
+            <View>
+                <Button
+                    title='Open Search'
+                    color='black'
+                    onPress={() => searchHeaderRef.current.show()}
+                />
+            </View>
+            <View>
+                <Button
+                    title='Clear'
+                    color='black'
+                    onPress={() => {
+                        searchHeaderRef.current.clear();
+                    }}
+                />
+            </View>
+            <Container navigate={props.navigation.navigate}>
+                {searchBar}
+
+                {queryRenderer()}
+            </Container>
+        </View>
+    )
 };
