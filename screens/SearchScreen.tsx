@@ -116,9 +116,8 @@ export default (props: ISearchScreenProps) => {
                 ref={searchHeaderRef}
                 placeholder='Search...'
                 placeholderColor='darkGrey'
-                onEnteringSearch={handleSearch}
-
-                pinnedSuggestions={[`Table`, `stairs`, `drawer`]}
+                pinnedSuggestions={[`tables`, `stairs`, `drawers`]}
+                onSearch={handleSearch}
                 onClear={() => {
                     console.log(`Clearing input!`);
                 }}
