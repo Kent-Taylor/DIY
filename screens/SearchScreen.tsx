@@ -92,68 +92,69 @@ export default (props: ISearchScreenProps) => {
         }
     };
 
-    // return (
-    //     <Container navigate={props.navigation.navigate}>
-    //         {searchBar}
-
-    //         {queryRenderer()}
-    //     </Container>
-    // );
-    const searchHeaderRef = React.useRef(null);
     return (
-        <View>
-            <StatusBar barStyle='light-content' />
-            <View />
-            <View>
-                <Ionicons name="md-search"
-                    color="black"
-                    size={30}
-                    onPress={() => searchHeaderRef.current.show()}
-                />
+        <Container navigate={props.navigation.navigate}>
+            {searchBar}
 
-            </View>
-            <SearchHeader
-                ref={searchHeaderRef}
-                placeholder='Search...'
-                placeholderColor='darkGrey'
-                pinnedSuggestions={[`tables`, `stairs`, `drawers`]}
-                onSearch={handleSearch}
-                onClear={() => {
-                    console.log(`Clearing input!`);
-                }}
-                onGetAutocompletions={async (text) => {
-                    if (text) {
-                        const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&q=${text}`, {
-                            method: `get`
-                        });
-                        const data = await response.json();
-                        return data[1];
-                    } else {
-                        return [];
-                    }
-                }}
-            />
-            <View>
-                <Button
-                    title='Open Search'
-                    color='black'
-                    onPress={() => searchHeaderRef.current.show()}
-                />
-            </View>
-            <View>
-                <Button
-                    title='Clear'
-                    color='black'
-                    onPress={() => {
-                        searchHeaderRef.current.clear();
-                    }}
-                />
-            </View>
-            <Container navigate={props.navigation.navigate}>
-                {searchBar}
+            {queryRenderer()}
+        </Container>
+    );
+    // const searchHeaderRef = React.useRef(null);
+    // return (
+    //     <View>
+    //         <StatusBar barStyle='light-content' />
+    //         <View />
+    //         <View>
+    //             <Ionicons name="md-search"
+    //                 color="black"
+    //                 size={30}
+    //                 onPress={() => searchHeaderRef.current.show()}
+    //             />
 
-                {queryRenderer()}
-            </Container>
-        </View>
-    )
+    //         </View>
+    //         <SearchHeader
+    //             ref={searchHeaderRef}
+    //             placeholder='Search...'
+    //             placeholderColor='darkGrey'
+    //             pinnedSuggestions={[`tables`, `stairs`, `drawers`]}
+    //             onEnteringSearch={(val) => setQuery(val)}
+    //             onSearch={handleSearch}
+    //             onClear={() => {
+    //                 console.log(`Clearing input!`);
+    //             }}
+    //             onGetAutocompletions={async (text) => {
+    //                 if (text) {
+    //                     const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&q=${text}`, {
+    //                         method: `get`
+    //                     });
+    //                     const data = await response.json();
+    //                     return data[1];
+    //                 } else {
+    //                     return [];
+    //                 }
+    //             }}
+    //         />
+    //         <View>
+    //             <Button
+    //                 title='Open Search'
+    //                 color='black'
+    //                 onPress={() => searchHeaderRef.current.show()}
+    //             />
+    //         </View>
+    //         <View>
+    //             <Button
+    //                 title='Clear'
+    //                 color='black'
+    //                 onPress={() => {
+    //                     handleSearch();
+    //                 }}
+    //             />
+    //         </View>
+    //         <Container navigate={props.navigation.navigate}>
+    //             {searchBar}
+
+    //             {queryRenderer()}
+    //         </Container>
+    //     </View>
+    // )
 };

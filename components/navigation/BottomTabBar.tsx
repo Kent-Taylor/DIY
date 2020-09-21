@@ -14,14 +14,14 @@ export default (props: IBottomTabBarProps) => {
     return (
         <View style={bottomTabStyles.container}>
             <TouchableOpacity onPress={() => props.navigate("Feed")}>
-                <MaterialCommunityIcons name="newspaper" color="white" size={30} />
+                <MaterialCommunityIcons name="home" color="white" size={30} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigate("Search")}>
                 <Ionicons name="md-search" color="white" size={30} />
 
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigate("PostForm")}>
-                <MaterialCommunityIcons name="plus-circle" color="white" size={30} />
+                <MaterialCommunityIcons name="plus-circle" color="white" size={40} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigate("Account")}>
                 <MaterialCommunityIcons name="settings" color="white" size={30} />
