@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import PostItem from "../components/posts/PostItem";
 import Container from "../components/layouts/Container";
 import AutoHeightImage from "react-native-auto-height-image";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 import postItemStyles from "../styles/stacks/posts/postItemStyles";
 
@@ -19,11 +20,15 @@ interface IPostDetailScreenProps {
                     name: string;
                     content: string;
                     post_image_url: string;
+                    email: string;
                 };
             };
         };
     };
+
 }
+
+
 
 export default (props: IPostDetailScreenProps) => {
     const { post } = props.navigation.state.params;
@@ -32,9 +37,12 @@ export default (props: IPostDetailScreenProps) => {
             <ScrollView>
                 <View style={{ marginTop: 10 }}>
                     {/* <PostItem post={post} /> */}
+                    
                     <View >
                         <Text style={postItemStyles.nameText}>{post.name}</Text>
+                        <Text>
 
+                        </Text>
                         <AutoHeightImage
                             width={Dimensions.get("window").width}
                             source={{ uri: post.post_image_url }}
