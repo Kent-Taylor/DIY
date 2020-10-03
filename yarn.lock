@@ -2473,10 +2473,10 @@ expo-permissions@~8.0.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
   integrity sha512-GHTRmwh1rd1b0FcibluPFu93NNQyl9b1anBBDVPmomoo9Prz7kDcO5p2hFqM99r896yvAUSe0fPloPKUq4g/1A==
 
-expo-secure-store@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-8.0.0.tgz#09b0a3faf83569fe0160464ec33455576606c6a1"
-  integrity sha512-IzzCZ6S1PfIFhpZf5imjGU8uslGyFZz80neuuJCOv8N1hugwYl6ncqrokuOK8d1ftrxVSEfGfwsN+8+m0iTZGA==
+expo-secure-store@^8.0.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-8.1.0.tgz#1dcc4705c5264c828592a83842b8be8bbfb5f77f"
+  integrity sha512-EjCx9M2nH7iW3eNOjXl0I7oPypI0es6OStZakimR2iD8riLZp9LYHTj+39Iuz2o1m3OKi+bpwr3cHL52DxcDnA==
 
 expo-sqlite@~8.0.0:
   version "8.0.0"
@@ -3474,6 +3474,11 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
+lodash@^2.4.1:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
+  integrity sha1-+t2DS5aDBz2hebPq5tnA0VBT9z4=
+
 lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.0:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
@@ -3897,6 +3902,13 @@ morgan@^1.9.0:
     depd "~2.0.0"
     on-finished "~2.3.0"
     on-headers "~1.0.2"
+
+mplayer@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/mplayer/-/mplayer-2.1.0.tgz#0f68cb91ccd6a9d219a2024612e365d3351adb82"
+  integrity sha1-D2jLkczWqdIZogJGEuNl0zUa24I=
+  dependencies:
+    lodash "^2.4.1"
 
 ms@2.0.0:
   version "2.0.0"

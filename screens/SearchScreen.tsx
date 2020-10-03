@@ -10,7 +10,6 @@ import SearchHeader from 'react-native-search-header';
 import searchStyles from "../styles/stacks/posts/searchStyles";
 
 const { searchFormContainer, searchTextInput, searchIcon } = searchStyles;
-
 interface ISearchScreenProps {
     navigation: {
         navigate: (arg: string) => void;
